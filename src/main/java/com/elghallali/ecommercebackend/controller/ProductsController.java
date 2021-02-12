@@ -10,7 +10,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.method.P;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +28,7 @@ public class ProductsController {
    @Autowired
     private CategoryService categoryService;
 
-   @GetMapping
+   @GetMapping("/list")
     public ResponseEntity<List<Product>> listProducts(){
        List<Product> list = productService.getProducts();
        List<Product> productList = new ArrayList<>();
@@ -41,7 +40,7 @@ public class ProductsController {
    }
 
    @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/admin")
+    @GetMapping("/allProduct")
     public ResponseEntity<List<Product>> listProductsAdmin(){
         List<Product> list = productService.getProducts();
         return new ResponseEntity(list, HttpStatus.OK);
@@ -121,7 +120,7 @@ public class ProductsController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/update/{id}")
+    @PutMapping("/delete/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable("id") Long id){
         if (!productService.existsById(id))
             return new ResponseEntity(new Message("The product not exist"),HttpStatus.BAD_REQUEST);
