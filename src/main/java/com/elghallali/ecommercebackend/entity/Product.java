@@ -1,30 +1,55 @@
 package com.elghallali.ecommercebackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import java.util.Date;
 
 @Entity
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotEmpty(message = "The name should not be empty ")
     private String name;
-    private String price;
-    private String addedOn;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinTable(name = "product_category", joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    @Positive
+    private double price;
+    private int stock;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createAt;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastUpdateAt;
+    @NotNull(message = "the category no should be empty")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinTable(name = "category_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     private Category category;
     private String description;
+    private String status;
 
     public Product() {
     }
 
-    public Product(String name, String price, String addedOn, Category category, String description) {
+    public Product(@NotEmpty(message = "The name should not be empty ") String name,
+                   @Positive double price, int stock,
+                   @NotNull(message = "the category no should be empty") Category category,
+                   String description) {
         this.name = name;
         this.price = price;
-        this.addedOn = addedOn;
+        this.stock = stock;
         this.category = category;
         this.description = description;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Long getId() {
@@ -43,20 +68,36 @@ public class Product {
         this.name = name;
     }
 
-    public String getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
-    public String getAddedOn() {
-        return addedOn;
+    public int getStock() {
+        return stock;
     }
 
-    public void setAddedOn(String addedOn) {
-        this.addedOn = addedOn;
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
+
+    public Date getLastUpdateAt() {
+        return lastUpdateAt;
+    }
+
+    public void setLastUpdateAt(Date lastUpdateAt) {
+        this.lastUpdateAt = lastUpdateAt;
     }
 
     public Category getCategory() {

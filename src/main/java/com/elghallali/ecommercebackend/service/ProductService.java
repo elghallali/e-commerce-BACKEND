@@ -1,5 +1,6 @@
 package com.elghallali.ecommercebackend.service;
 
+import com.elghallali.ecommercebackend.entity.Category;
 import com.elghallali.ecommercebackend.entity.Product;
 import com.elghallali.ecommercebackend.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,5 +34,9 @@ public class ProductService {
 
     public boolean existsById(Long id){
         return productRepository.existsById(id);
+    }
+
+    public List<Product> getByCategory(Category category){
+        return productRepository.findByCategory(category);
     }
 }
