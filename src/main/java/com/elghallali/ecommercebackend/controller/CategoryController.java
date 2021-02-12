@@ -74,7 +74,7 @@ public class CategoryController {
         Category category = categoryService.getOne(id).get();
         category.setStatus("DELETED");
         categoryService.save(category);
-        return new ResponseEntity(new Message("That category is updated"),HttpStatus.OK);
+        return new ResponseEntity(new Message("That category is deleted"),HttpStatus.OK);
     }
 
 
