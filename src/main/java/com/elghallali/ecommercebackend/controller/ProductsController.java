@@ -40,7 +40,7 @@ public class ProductsController {
    }
 
    @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/allProduct")
+    @GetMapping("/admin/all")
     public ResponseEntity<List<Product>> listProductsAdmin(){
         List<Product> list = productService.getProducts();
         return new ResponseEntity(list, HttpStatus.OK);
@@ -74,7 +74,7 @@ public class ProductsController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/create")
+    @PostMapping("/admin/create")
     public ResponseEntity<?> createProduct(@RequestBody ProductDto productDto){
 
        if (StringUtils.isBlank(productDto.getName()))
@@ -98,7 +98,7 @@ public class ProductsController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/update/{id}")
+    @PutMapping("/admin/update/{id}")
     public ResponseEntity<?> updateProduct(@PathVariable("id") Long id,@RequestBody ProductDto productDto){
         if (!productService.existsById(id))
             return new ResponseEntity(new Message("The product not exist"),HttpStatus.BAD_REQUEST);
@@ -120,7 +120,7 @@ public class ProductsController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/delete/{id}")
+    @PutMapping("/admin/delete/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable("id") Long id){
         if (!productService.existsById(id))
             return new ResponseEntity(new Message("The product not exist"),HttpStatus.BAD_REQUEST);

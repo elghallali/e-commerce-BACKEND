@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/categories")
+@RequestMapping("/api/categories/admin")
 @CrossOrigin
 public class CategoryController {
 
@@ -29,7 +29,7 @@ public class CategoryController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/{id}")
+    @GetMapping("/detail/{id}")
     public ResponseEntity<Category> getCategoryById(@PathVariable("id") Long id){
         if (!categoryService.existById(id))
             return new ResponseEntity(new Message("Category not exist"),HttpStatus.BAD_REQUEST);
