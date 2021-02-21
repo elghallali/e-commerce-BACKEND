@@ -19,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/products")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200/")
 public class ProductsController {
 
    @Autowired
@@ -62,8 +62,8 @@ public class ProductsController {
         return new ResponseEntity(product,HttpStatus.OK);
     }
 
-    @GetMapping("/category/{id}")
-    public ResponseEntity<List<Product>> listProductCategory(@PathVariable("id") Long id, String categoryName){
+    @GetMapping("/{category}/{id}")
+    public ResponseEntity<List<Product>> listProductCategory(@PathVariable("id") Long id, @PathVariable("category") String categoryName){
        if (!categoryService.existById(id))
            return new ResponseEntity(new Message("Category not exist"), HttpStatus.BAD_REQUEST);
        if (categoryService.existByName(categoryName) && categoryService.getByName(categoryName).get().getId() != id)

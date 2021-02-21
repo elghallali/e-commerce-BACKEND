@@ -28,8 +28,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/auth")
-@CrossOrigin
+@RequestMapping("/api/auth")
+@CrossOrigin(origins = "http://localhost:4200/")
 public class AuthController {
 
     @Autowired
